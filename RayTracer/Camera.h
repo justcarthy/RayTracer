@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector.h"
+#include "Matrix4.h"
 
 class Camera {
 public:
@@ -8,11 +9,10 @@ public:
 	float fov;
 	float aspectRatio;
 	Vector origin;
+	Matrix4 camToWorld;
+	Matrix4 worldToCam;
 
-	Camera(int w, int h, float f) : width(w), height(h), fov(f) {
-		width >= height ? aspectRatio = width / float(height) : aspectRatio = height / float(width);
-		origin = Vector(0, 0, 0);
-	}
+	Camera(int w, int h, float f, float angle, Vector location);
 	float worldX(float x);
 	float worldY(float y);
 

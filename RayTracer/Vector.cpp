@@ -6,6 +6,12 @@ Vector& Vector::normalize() {
 	return *this;
 }
 
+float Vector::dotProduct(const Vector & v) const
+{
+	return (v.x*x + v.y * y + v.z *z);
+}
+
+
 float Vector::magnitude()
 {
 	float mag = x*x + y*y + z*z;
