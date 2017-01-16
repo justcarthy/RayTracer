@@ -3,22 +3,29 @@
 Matrix4::Matrix4()
 {
 	for (int i = 0; i < 4; i++) {
-		matrix[i][i] = 1;
+		for (int j = 0; j < 4; j++) {
+			i == j ? matrix[i][j] = 1 : matrix[i][j] = 0;
+		}
 	}
 }
 
 Vector Matrix4::matmul(Vector v)
 {	
 	Vector result;
-
 	result.x = v.dotProduct(Vector(matrix[0][0], matrix[0][1], matrix[0][2]))+ matrix[0][3];
-	result.y = v.dotProduct(Vector(matrix[1][0], matrix[1][1], matrix[1][2])) + matrix[1][3];
-	result.z = v.dotProduct(Vector(matrix[2][0], matrix[2][1], matrix[2][2])) + matrix[2][3];
+	result.y = v.dotProduct(Vector(matrix[1][0], matrix[1][1], matrix[1][2]))+ matrix[1][3];
+	result.z = v.dotProduct(Vector(matrix[2][0], matrix[2][1], matrix[2][2]))+ matrix[2][3];
 	return result;
 }
 
 void Matrix4::rotate(int axis, float angle)
 {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			i == j ? matrix[i][j] = 1 : matrix[i][j] = 0;
+		}
+	}
+
 	switch (axis)
 	{
 	case 0: //x -axis
@@ -45,6 +52,11 @@ void Matrix4::rotate(int axis, float angle)
 
 void Matrix4::translate(Vector direction) 
 {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			i == j ? matrix[i][j] = 1 : matrix[i][j] = 0;
+		}
+	}
 	matrix[0][3] = direction.x;
 	matrix[1][3] = direction.y;
 	matrix[2][3] = direction.z;

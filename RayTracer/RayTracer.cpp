@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Sphere.h"
 #include "CImg.h"
+#include "Camera.h"
 //#include "Vector.h"
 #include <iostream>
 #include <vector>
@@ -12,38 +13,43 @@
 using namespace cimg_library;
 
 std::vector<Sphere> objectList;
-Vector backgroundColor(0, 0, 0);
+Vector backgroundColor(1, 1, 1);
 
 
-Vector traceRay(Vector &rayVec);
+Vector traceRay(Vector &rayVec, Vector &eye);
 float Distance(Vector& a, Vector& b);
 
 int main()
 {
 	int width = 1366;
 	int height = 768;
-	float widthFix = 1 / float(width), heightFix = 1 / float(height);
-	float fov = 30, aspect = width / float(height);
-	
-	//TODO angle;
-	Vector topLeft(-width/2, height/2, 0);
-	Vector bottomRight(width/2, -height/2, 0);
-	Vector backgroundColor(255, 255, 255);
-	CImg<unsigned char> image(width, height, 1, 3, 1);
-	objectList.push_back(Sphere(Vector(0, 0, 0), Vector(255, 0, 0), 100));
-	objectList.push_back(Sphere(Vector(500, 0, 400), Vector(0, 255, 0), 100));
-	objectList.push_back(Sphere(Vector(-500, 0, 300), Vector(100, 10, 0), 100));
+	float fov = 90;
+	float angle = 0;
 
-	for (int i = topLeft.x; i <= bottomRight.x; i++) {
-		for (int j = topLeft.y; j >= bottomRight.y; j--) {
-			Vector rayVector(i, j, 0);
-			rayVector = (rayVector - eye);
+	CImg<float> image(width, height, 1, 3, 1);
+	Camera eye (width, height, fov, angle, Vector());
+	objectList.push_back(Sphere(Vector(-10, 0, -10), Vector(1, 0, 0), 0.5));
+	objectList.push_back(Sphere(Vector(-5, 5, -10), Vector(0, 1, 0), 0.5));
+	objectList.push_back(Sphere(Vector(0, 10, -10), Vector(0, 0, 1), 0.5));
+	objectList.push_back(Sphere(Vector(5, 5, -10), Vector(1, 0, 0), 0.5));
+	objectList.push_back(Sphere(Vector(10, 0, -10), Vector(0, 1, 0), 0.5));
+	objectList.push_back(Sphere(Vector(5, -5, -10), Vector(0, 0, 1), 0.5));
+	objectList.push_back(Sphere(Vector(0, -10, -10), Vector(0, 1, 0), 0.5));
+	objectList.push_back(Sphere(Vector(-5, -5, -10), Vector(0, 0, 1), 0.5));
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			float x = eye.worldX(j);
+			
+			float y = eye.worldY(i);
+			Vector camVector(x, y, -eye.aspectRatio);
+			Vector rayVector(eye.camToWorld.matmul(camVector));		
 			rayVector.normalize();
-			Vector color = traceRay(rayVector);
+			Vector color = traceRay(rayVector, eye.origin);
 
-			image(i + (width / 2), j - height/2, 1, 0) = color.x;
-			image(i + (width / 2), j - height/2, 1, 1) = color.y;
-			image(i + (width / 2), j - height/2, 1, 2) = color.z;
+			image(j, i, 0) = color.x;
+			image(j, i, 1) = color.y;
+			image(j, i, 2) = color.z;
 		}
 	}
 	CImgDisplay main_display(image);
@@ -52,7 +58,7 @@ int main()
 }
 
 
-Vector traceRay(Vector &rayVec) {
+Vector traceRay(Vector &rayVec, Vector & eye) {
 	float traceClose = INFINITY;
 	float tempDist;
 	Sphere *hitObject;
@@ -77,5 +83,5 @@ float Distance(Vector& a, Vector& b) {
 	return (sqrtf(powf(temp.x, 2) + powf(temp.y, 2) + powf(temp.z, 2)));
 }
 
-void render();
+
 
