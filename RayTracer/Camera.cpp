@@ -12,11 +12,10 @@ Camera::Camera(int w, int h, float f, float angle, Vector location)
 	Matrix4 translate;
 	rotate.rotate(0, angle);
 	translate.translate(location);
-	
-	cameraToWorld = cameraToWorld * rotate;
 	cameraToWorld = cameraToWorld * translate;
+	cameraToWorld = cameraToWorld * rotate;
 	origin = cameraToWorld.matmul(location);
-	width >= height ? aspectRatio = width / float(height) : aspectRatio = height / float(width);
+	width >= height ? aspectRatio = width / (float)height : aspectRatio = height / (float)width;
 
 }
 

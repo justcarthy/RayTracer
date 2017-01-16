@@ -11,12 +11,12 @@ Matrix4::Matrix4()
 
 Vector Matrix4::matmul(Vector &v)
 {	
-	Vector result;
-	float x = v.x * matrix[0][0] + v.y * matrix[1][0] + v.z * matrix[2][0] + matrix[3][0];
-	float y = v.x * matrix[0][1] + v.y * matrix[1][1] + v.z * matrix[2][1] + matrix[3][1];
-	float z = v.x * matrix[0][2] + v.y * matrix[1][2] + v.z * matrix[2][2] + matrix[3][2];
-	float w = v.x * matrix[0][3] + v.y * matrix[1][3] + v.z * matrix[2][3] + matrix[3][3];
-	
+	float x, y, z, w;
+	x = v.x * matrix[0][0] + v.y * matrix[1][0] + v.z * matrix[2][0] + matrix[3][0];
+	y = v.x * matrix[0][1] + v.y * matrix[1][1] + v.z * matrix[2][1] + matrix[3][1];
+	z = v.x * matrix[0][2] + v.y * matrix[1][2] + v.z * matrix[2][2] + matrix[3][2];
+	w = v.x * matrix[0][3] + v.y * matrix[1][3] + v.z * matrix[2][3] + matrix[3][3];
+	Vector result(x / w, y / w, z / w);
 	return result;
 }
 

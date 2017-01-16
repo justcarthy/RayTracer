@@ -1,21 +1,21 @@
 #pragma once
 #include "Object.h"
-#include "Vector.h"
-#include <math.h>
+
 
 class Sphere :public Object {
 	public:
 		float radius;
-
-		Sphere(const Vector &c, const Vector &co, const float & r) : radius(r), Object(c, co) {}
+		Vector center;
+		Sphere(Vector c, float r, Vector co, float t, Type s /*Matrix4 x*/);
+	
 		
 		bool isHit(Vector &rayVector, Vector &rayOrigin);
-		Vector intersectPoint(Vector &rayVector, Vector &rayOrigin);
-		Vector normalPoint(Vector &pointOnSphere);
+		Vector intersectPoints(const Vector &rayVector, const Vector &rayOrigin);
+		Vector normalPoint(Vector hitPoint);
 		
 	private:
-		float calcB(Vector &rayVector, Vector &rayOrigin);
-		float calcC(Vector &rayVector, Vector &rayOrigin);
+		float calcB(const Vector &rayVector, const Vector &rayOrigin);
+		float calcC(const Vector &rayVector, const Vector &rayOrigin);
 		float discriminant(float B, float C);
 
 };

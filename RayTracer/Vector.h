@@ -9,6 +9,7 @@ public:
 	Vector& normalize();
 	float dotProduct(const Vector& v)const;
 	float magnitude ();
+	float Distance(Vector & b);
 	Vector operator * (const float &f) const { return Vector(x*f, y*f, z*f); }
 	Vector operator * (const Vector &v) const { return Vector(x*v.x, y*v.y, z*v.z); }
 	Vector operator / (const float &f) const { return Vector(x / f, y / f, z / f); }

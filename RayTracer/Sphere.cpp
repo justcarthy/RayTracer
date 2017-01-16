@@ -1,5 +1,14 @@
 #include "Sphere.h"
 
+Sphere::Sphere(Vector c, float r, Vector co, float t, Type s /*, Matrix4 x*/)
+	:Object(co, t, s)
+{
+	//this->transform = x;
+	this->center = c;
+	this->radius = r;
+	
+}
+
 bool Sphere::isHit(Vector & rayVector, Vector & rayOrigin )
 {
 	float B = calcB(rayVector, rayOrigin);
@@ -9,7 +18,7 @@ bool Sphere::isHit(Vector & rayVector, Vector & rayOrigin )
 
 }
 
-Vector Sphere::intersectPoint(Vector & rayVector, Vector & rayOrigin)
+Vector Sphere::intersectPoints(const Vector & rayVector, const Vector & rayOrigin)
 {
 	float B = calcB(rayVector, rayOrigin);
 	float C = calcC(rayVector, rayOrigin);
@@ -17,20 +26,20 @@ Vector Sphere::intersectPoint(Vector & rayVector, Vector & rayOrigin)
 	float t0 = (-B - sqrt(discriminant(B, C))) / 2;
 	float t1 = (-B + sqrt(discriminant(B, C))) / 2;
 	float tAccept;
-	if (t0 > 0) tAccept = t0;
-	else tAccept = t1;
+
+	t0 < t1 ? tAccept = t0 : tAccept = t1;
 	Vector point = rayVector * tAccept;
 	point = point + rayOrigin;
 
 	return point;
 }
 
-Vector Sphere::normalPoint(Vector & pointOnSphere)
+Vector Sphere::normalPoint(Vector hitPoint)
 {	
-	return (pointOnSphere - center)/radius;
+	return ((hitPoint - center)/radius).normalize();
 }
 
-float Sphere::calcB(Vector & rayVector, Vector & rayOrigin)
+float Sphere::calcB(const Vector & rayVector, const Vector & rayOrigin)
 {
 	Vector check = rayOrigin - center;
 	check = check * rayVector;
@@ -38,7 +47,7 @@ float Sphere::calcB(Vector & rayVector, Vector & rayOrigin)
 	return B;
 }
 
-float Sphere::calcC(Vector & rayVector, Vector & rayOrigin)
+float Sphere::calcC(const Vector & rayVector, const Vector & rayOrigin)
 {
 	Vector temp = rayOrigin - center;
 	temp = temp*temp;
