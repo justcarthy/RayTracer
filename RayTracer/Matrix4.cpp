@@ -9,22 +9,19 @@ Matrix4::Matrix4()
 	}
 }
 
-Vector Matrix4::matmul(Vector v)
+Vector Matrix4::matmul(Vector &v)
 {	
 	Vector result;
-	result.x = v.dotProduct(Vector(matrix[0][0], matrix[0][1], matrix[0][2]))+ matrix[0][3];
-	result.y = v.dotProduct(Vector(matrix[1][0], matrix[1][1], matrix[1][2]))+ matrix[1][3];
-	result.z = v.dotProduct(Vector(matrix[2][0], matrix[2][1], matrix[2][2]))+ matrix[2][3];
+	float x = v.x * matrix[0][0] + v.y * matrix[1][0] + v.z * matrix[2][0] + matrix[3][0];
+	float y = v.x * matrix[0][1] + v.y * matrix[1][1] + v.z * matrix[2][1] + matrix[3][1];
+	float z = v.x * matrix[0][2] + v.y * matrix[1][2] + v.z * matrix[2][2] + matrix[3][2];
+	float w = v.x * matrix[0][3] + v.y * matrix[1][3] + v.z * matrix[2][3] + matrix[3][3];
+	
 	return result;
 }
 
 void Matrix4::rotate(int axis, float angle)
 {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			i == j ? matrix[i][j] = 1 : matrix[i][j] = 0;
-		}
-	}
 
 	switch (axis)
 	{
@@ -50,30 +47,27 @@ void Matrix4::rotate(int axis, float angle)
 	}
 }
 
-void Matrix4::translate(Vector direction) 
+void Matrix4::translate(Vector& direction) 
 {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			i == j ? matrix[i][j] = 1 : matrix[i][j] = 0;
-		}
-	}
+	
 	matrix[0][3] = direction.x;
 	matrix[1][3] = direction.y;
 	matrix[2][3] = direction.z;
 	matrix[3][3] = 1;
 }
 
-Matrix4 Matrix4::operator*(const Matrix4 & mat) const
-{
-
-	Matrix4 result;
-	for (int i = 0; i<4; i++) {
-		for (int j = 0; j<4; j++) {
-			if (i == j) result.matrix[i][j]--;
-			for (int k = 0; k<4; k++) {
-				result.matrix[i][j] += matrix[i][k] * mat.matrix[k][j];
-			}
+static void multiply(const Matrix4& a, const Matrix4& b, Matrix4&c) {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			c.matrix[i][j] = a.matrix[i][0] * b.matrix[0][j] + a.matrix[i][1] * b.matrix[1][j] +
+				a.matrix[i][2] * b.matrix[2][j] + a.matrix[i][3] * b.matrix[3][j];
 		}
 	}
-	return result;
+}
+
+Matrix4 Matrix4::operator*(const Matrix4 & mat) const
+{
+	Matrix4 temp;
+	multiply(*this, mat, temp);
+	return temp;
 }
