@@ -6,10 +6,9 @@ Triangle::Triangle(Vector p1, Vector p2, Vector p3, Vector co, float t, float d,
 	t1 = p1;
 	t2 = p2;
 	t3 = p3;
-	normal = Triangle::crossProductForNormal(p1, p2, p3);
+	normal = crossProductForNormal(p1, p2, p3);
 	normal.normalize();
 	D = fabsf(normal.x *(-p1.x) + normal.y*(-p1.y) + normal.z*(p1.z));
-	hitP = Vector(-1, -1, -1);
 }
 
 bool Triangle::isHit(Vector & rayVector, Vector & rayOrigin)
@@ -21,18 +20,18 @@ bool Triangle::isHit(Vector & rayVector, Vector & rayOrigin)
 		t = -1 * ((normal.dotProduct(rayOrigin) + D) / check);
 		if (t < 0) return false;
 	}
-	hitP = (rayVector * t) + rayOrigin;
+	Vector hitP = (rayVector * t) + rayOrigin;
 	return (inTriangle(hitP));
 }
 
 Vector Triangle::intersectPoints(const Vector & rayVector, const Vector & rayOrigin)
 {
-	if (hitP.x == -1 && hitP.y == -1 && hitP.z == -1) {
-		float t;
-		float check = rayVector.dotProduct(normal);
-		t = -1 * ((normal.dotProduct(rayOrigin) + D) / check);
-		hitP = (rayVector * t) + rayOrigin;
-	}
+
+	float t;
+	float check = rayVector.dotProduct(normal);
+	t = -1 * ((normal.dotProduct(rayOrigin) + D) / check);
+	Vector hitP = (rayVector * t) + rayOrigin;
+
 
 	return hitP;
 }

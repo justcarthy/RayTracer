@@ -28,27 +28,27 @@ int main()
 {
 	int width = 640;
 	int height = 480;
-	float fov = 65;
+	float fov = 50;
 	float angle = 0;
 
 	CImg<float> image(width, height, 1, 3, 1);
-	Camera eye (width, height, fov, angle, Vector(0,0,1));
-	lightList.push_back(new Light(Vector(0, 6, -10), Vector(0.2, 0.2, 0.2)));
+	Camera eye(width, height, fov, angle, Vector(0, 0, 1));
+	lightList.push_back(new Light(Vector(-3, 2, -19), Vector(0.2, 0.2, 0.2)));
 	objectList.push_back(new Sphere(Vector(5, 0, -15), 0.5, Vector(0.7, 0.2, 0.5), 0, 0.5, 0.2, 1));
-	objectList.push_back(new Triangle(Vector(0, 0, -15), Vector(-5, 0, -15), Vector(-5, 5, -18), Vector(0, 0.2, 0.5), 0, 0.5, 0.2, 1));
-	objectList.push_back(new Plane(Vector(0, 0, -20), Vector(0, 0, 1), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
-	objectList.push_back(new Plane(Vector(0, -7, 0), Vector(0, 1, 0), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
-	objectList.push_back(new Plane(Vector(0, 7, 0), Vector(0, -1, 0), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
-	objectList.push_back(new Plane(Vector(-7, 0, 0), Vector(1, 0, 0), Vector(1, 0, 0), 0, 0.5, 0.2, 1));
-	objectList.push_back(new Plane(Vector(7, 0, 0), Vector(-1, 0, 0), Vector(0, 0, 1), 0, 0.5, 0.2, 1));
-	
+	//objectList.push_back(new Triangle(Vector(0, 0, -15), Vector(-5, 0, -15), Vector(0, 3, -9), Vector(0, 0.7, 1), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(0, -7, 0), Vector(0, 10, 0), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(0, 0, -20), Vector(0, 0, 10), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(0, 7, 0), Vector(0, -10, 0), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(-7, 0, 0), Vector(10, 0, 0), Vector(1, 0, 0), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(7, 0, 0), Vector(-10, 0, 0), Vector(0, 0, 1), 0, 0.5, 0.2, 1));
+
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			float x = eye.worldX(j);
 			float y = eye.worldY(i);
 			Vector camVector(x, y, -1);
-			Vector rayVector  = eye.camToWorld.matmul(camVector);		
+			Vector rayVector = eye.camToWorld.matmul(camVector);
 			rayVector.normalize();
 			Vector color = traceRay(rayVector, eye.origin);
 
@@ -87,31 +87,36 @@ Vector traceRay(Vector &rayVec, Vector & eye) {
 
 
 
-Vector shade(Object* obj, Vector *point, Vector* normal) 
+Vector shade(Object* obj, Vector *point, Vector* normal)
 {
-	Vector color;
-	Vector DiffuseIntensity;
+	Vector localColor;
+	Vector DiffuseIntensity = backgroundColor;
 	Vector lightVec;
 	float tempDot;
 	float diff = -INFINITY;
 	float spec;
-	float amb = 0.5 * obj->ambient; // TODO: ADD TURN BACKGROUND COLOR INTO LIGHT OBJECT
+	//float amb = 0.5 * obj->ambient; // TODO: ADD TURN BACKGROUND COLOR INTO LIGHT OBJECT
 	for (Light* light : lightList) {
 		lightVec = light->position - *point;
 		lightVec.normalize();
-		tempDot = lightVec.dotProduct(*normal);
-		if (tempDot > diff) 
-		{
-			diff = tempDot;
-			DiffuseIntensity = (light->color * (obj->color *obj->diffuse) * diff);
+		for (Object * hito : objectList) {
+			if (hito->isHit(lightVec, *point))
+				break;
+			else {
+				tempDot = lightVec.dotProduct((*normal));
+				if (tempDot > 0) {
+					diff = tempDot;
+					DiffuseIntensity = (light->color * (obj->color *obj->diffuse) * diff);
+				}
+			}
 		}
 	}
 	return DiffuseIntensity;
-	
+
 	//ambientLight
 
-		
-	
+
+
 }
 
 

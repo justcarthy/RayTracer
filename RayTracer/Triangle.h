@@ -8,7 +8,6 @@ public:
 	Vector t2;
 	Vector t3;
 	Vector normal;
-	Vector hitP;
 	float D;
 
 	Triangle(Vector p1, Vector p2, Vector p3, Vector co, float t, float d, float a, float s);
