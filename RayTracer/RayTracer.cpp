@@ -18,11 +18,11 @@ std::vector<Object*> objectList;
 std::vector<Light*> lightList;
 
 Vector backgroundColor(0, 0, 0);
-Vector ambientLight(0.1, 0.1, 0.1);
+//Vector ambientLight(0.2, 0.2, 0.2);
 
 
 Vector traceRay(Vector &rayVec, Vector &eye);
-Vector shade(Object* obj, Vector* point, Vector* Normal);
+Vector shade(Object* obj, Vector* point, Vector* normal);
 
 int main()
 {
@@ -33,14 +33,14 @@ int main()
 
 	CImg<float> image(width, height, 1, 3, 1);
 	Camera eye (width, height, fov, angle, Vector(0,0,1));
-	lightList.push_back(new Light(Vector(0, 10, 0), Vector(1, 1, 1)));
-	objectList.push_back(new Sphere(Vector(5, 0, -15), 0.5, Vector(0.7, 0.2, 0.5), 0, DIFFUSED));
-	objectList.push_back(new Triangle(Vector(0, 5, -11), Vector(-5, 0, -11), Vector(5, 0, -11), Vector(0, 0, 1), Vector(1, 0, 0), 0, DIFFUSED));
-	objectList.push_back(new Plane(Vector(0, 0, -20), Vector(0, 0, 1), Vector(1, 1, 0), 0, DIFFUSED));
-	objectList.push_back(new Plane(Vector(0, -7, 0), Vector(0, 1, 0), Vector(0, 1, 0), 0, DIFFUSED));
-	objectList.push_back(new Plane(Vector(0, 7, 0), Vector(0, -1, 0), Vector(0, 1, 1), 0, DIFFUSED));
-	objectList.push_back(new Plane(Vector(-7, 0, 0), Vector(1, 0, 0), Vector(1, 0, 0), 0, DIFFUSED));
-	objectList.push_back(new Plane(Vector(7, 0, 0), Vector(-1, 0, 0), Vector(0, 0, 1), 0, DIFFUSED));
+	lightList.push_back(new Light(Vector(0, 6, -10), Vector(0.2, 0.2, 0.2)));
+	objectList.push_back(new Sphere(Vector(5, 0, -15), 0.5, Vector(0.7, 0.2, 0.5), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Triangle(Vector(0, 0, -15), Vector(-5, 0, -15), Vector(-5, 5, -18), Vector(0, 0.2, 0.5), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(0, 0, -20), Vector(0, 0, 1), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(0, -7, 0), Vector(0, 1, 0), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(0, 7, 0), Vector(0, -1, 0), Vector(1, 1, 1), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(-7, 0, 0), Vector(1, 0, 0), Vector(1, 0, 0), 0, 0.5, 0.2, 1));
+	objectList.push_back(new Plane(Vector(7, 0, 0), Vector(-1, 0, 0), Vector(0, 0, 1), 0, 0.5, 0.2, 1));
 	
 
 	for (int i = 0; i < height; i++) {
@@ -87,8 +87,31 @@ Vector traceRay(Vector &rayVec, Vector & eye) {
 
 
 
-Vector shade(Object* obj, Vector* point, Vector* Normal) {
-	return ambientLight
+Vector shade(Object* obj, Vector *point, Vector* normal) 
+{
+	Vector color;
+	Vector DiffuseIntensity;
+	Vector lightVec;
+	float tempDot;
+	float diff = -INFINITY;
+	float spec;
+	float amb = 0.5 * obj->ambient; // TODO: ADD TURN BACKGROUND COLOR INTO LIGHT OBJECT
+	for (Light* light : lightList) {
+		lightVec = light->position - *point;
+		lightVec.normalize();
+		tempDot = lightVec.dotProduct(*normal);
+		if (tempDot > diff) 
+		{
+			diff = tempDot;
+			DiffuseIntensity = (light->color * (obj->color *obj->diffuse) * diff);
+		}
+	}
+	return DiffuseIntensity;
+	
+	//ambientLight
+
+		
+	
 }
 
 

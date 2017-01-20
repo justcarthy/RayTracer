@@ -6,7 +6,7 @@ public:
 	Vector point;
 	Vector normal;
 	float D;
-	Plane(Vector p, Vector n, Vector co, float t, Type s);
+	Plane(Vector p, Vector n, Vector co, float t, float d, float a, float s);
 
 	bool isHit(Vector &rayVector, Vector &rayOrigin);
 	Vector intersectPoints(const Vector &rayVector, const Vector &rayOrigin);

@@ -1,8 +1,10 @@
 #include "Object.h"
 
-Object::Object(Vector co, float trans, Type t)
+Object::Object(Vector co, float trans, float d, float a, float s)
 {
 	this->color = co;
 	this->transparency = trans;
-	this->surface = t;
+	this->diffuse = d;
+	this->ambient = a;
+	this->specular = s;
 }

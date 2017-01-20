@@ -5,18 +5,20 @@
 #include "Vector.h"
 #include <math.h>
 
-enum Type { SPECULAR, DIFFUSED };
 
 class Object {
 		
 	public:
 		Vector color;
 		float transparency;
-		Type surface;
+		float diffuse;
+		float ambient;
+		float specular;
+
 		Matrix4 transform;
 		Matrix4 inverse;
 		Matrix4 transpose;
-		Object(Vector co, float trans, Type t);
+		Object(Vector co, float trans, float d, float a, float s);
 
 		virtual bool isHit(Vector & rayVector, Vector& rayOrigin) = 0;
 		virtual Vector intersectPoints(const Vector & rayOrigin, const Vector &rayVec) = 0;

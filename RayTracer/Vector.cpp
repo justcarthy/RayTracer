@@ -26,3 +26,4 @@ float Vector::Distance(Vector& b) {
 	Vector temp = (*this) - b;
 	return (sqrtf(powf(temp.x, 2) + powf(temp.y, 2) + powf(temp.z, 2)));
 }
+

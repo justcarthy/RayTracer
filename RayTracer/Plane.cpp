@@ -1,7 +1,7 @@
 #include "Plane.h"
 
-Plane::Plane(Vector p, Vector n, Vector co, float t, Type s) :
-	Object(co, t, s)
+Plane::Plane(Vector p, Vector n, Vector co, float t, float d, float a, float s) :
+	Object(co, t, d, a, s)
 {
 	point = p;
 	normal = n.normalize();
@@ -17,7 +17,6 @@ bool Plane::isHit(Vector & rayVector, Vector & rayOrigin)
 		if (t < 0) return false;
 	}
 	return true;
-	
 }
 
 Vector Plane::intersectPoints(const Vector & rayVector, const Vector & rayOrigin)

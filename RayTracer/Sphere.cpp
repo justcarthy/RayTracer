@@ -1,7 +1,7 @@
 #include "Sphere.h"
 
-Sphere::Sphere(Vector c, float r, Vector co, float t, Type s /*, Matrix4 x*/)
-	:Object(co, t, s)
+Sphere::Sphere(Vector c, float r, Vector co, float t, float d, float a, float s /*, Matrix4 x*/)
+	:Object(co, t, d, a, s)
 {
 	//this->transform = x;
 	this->center = c;

@@ -6,7 +6,7 @@ class Sphere :public Object {
 	public:
 		float radius;
 		Vector center;
-		Sphere(Vector c, float r, Vector co, float t, Type s /*Matrix4 x*/);
+		Sphere(Vector c, float r, Vector co, float t, float d, float a, float s /*Matrix4 x*/);
 	
 		
 		bool isHit(Vector &rayVector, Vector &rayOrigin);

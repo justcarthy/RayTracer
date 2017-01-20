@@ -1,12 +1,13 @@
 #include "Triangle.h"
 
-Triangle::Triangle(Vector p1, Vector p2, Vector p3, Vector norm, Vector co, float t, Type s)
-	: Object(co, t, s)
+Triangle::Triangle(Vector p1, Vector p2, Vector p3, Vector co, float t, float d, float a, float s)
+	: Object(co, t, d, a, s)
 {
 	t1 = p1;
 	t2 = p2;
 	t3 = p3;
-	normal = norm;
+	normal = Triangle::crossProductForNormal(p1, p2, p3);
+	normal.normalize();
 	D = fabsf(normal.x *(-p1.x) + normal.y*(-p1.y) + normal.z*(p1.z));
 	hitP = Vector(-1, -1, -1);
 }
@@ -59,4 +60,14 @@ bool Triangle::inTriangle(Vector point)
 	float u = (d11 *d02 - d01 *d12) * invDenom;
 	float v = (d00 *d12 - d01 *d02) * invDenom;
 	return ((u >= 0) && (v >= 0) && (u + v < 1));
+}
+
+Vector Triangle::crossProductForNormal(Vector &p1, Vector &p2, Vector &p3) {
+	
+	Vector v = p1 - p2;
+	Vector w = p3 - p1;
+	float Nx = (v.y * w.z) - (v.z * w.y);
+	float Ny = (v.z * w.x) - (v.x * w.z);
+	float Nz = (v.x * w.y) - (v.y * w.x);
+	return Vector(Nx, Ny, Nz);
 }
