@@ -1,7 +1,7 @@
 #include "Triangle.h"
 
-Triangle::Triangle(Vector p1, Vector p2, Vector p3, Vector co, float t, float d, float a, float s)
-	: Object(co, t, d, a, s)
+Triangle::Triangle(Vector p1, Vector p2, Vector p3, Vector co, bool r, float d, float a, float s)
+	: Object(co, r, d, a, s)
 {
 	t1 = p1;
 	t2 = p2;

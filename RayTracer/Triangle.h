@@ -10,7 +10,7 @@ public:
 	Vector normal;
 	float D;
 
-	Triangle(Vector p1, Vector p2, Vector p3, Vector co, float t, float d, float a, float s);
+	Triangle(Vector p1, Vector p2, Vector p3, Vector co, bool r, float d, float a, float s);
 	bool isHit(Vector &rayVector, Vector &rayOrigin);
 	Vector intersectPoints(const Vector &rayVector, const Vector &rayOrigin);
 	Vector normalPoint(Vector hitPoint);

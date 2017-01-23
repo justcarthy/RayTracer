@@ -21,13 +21,13 @@ Camera::Camera(int w, int h, float f, float angle, Vector location)
 
 float Camera::worldX(float x)
 {
-	float wx = (2 * (x + 0.5) / (float)width - 1) * tan(((fov / 2)* M_PI) / 180) * aspectRatio;
+	float wx = (2 * (x + 0.5) / (float)width - 1) * tan(fov / 2* M_PI / 180) * aspectRatio;
 	return wx;
 }
 
 float Camera::worldY(float y)
 {
-	float wy = (1 - 2 * (y + 0.5) / (float)height) * tan(((fov / 2) * M_PI) / 180);
+	float wy = (1 - 2 * (y + 0.5) / (float)height) * tan(fov / 2 * M_PI / 180);
 	return wy;
 }
 

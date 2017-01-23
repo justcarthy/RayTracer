@@ -1,7 +1,7 @@
 #include "Sphere.h"
 
-Sphere::Sphere(Vector c, float r, Vector co, float t, float d, float a, float s /*, Matrix4 x*/)
-	:Object(co, t, d, a, s)
+Sphere::Sphere(Vector c, float r, Vector co, bool ref, float d, float a, float s /*, Matrix4 x*/)
+	:Object(co, ref, d, a, s)
 {
 	//this->transform = x;
 	this->center = c;
@@ -11,26 +11,43 @@ Sphere::Sphere(Vector c, float r, Vector co, float t, float d, float a, float s 
 
 bool Sphere::isHit(Vector & rayVector, Vector & rayOrigin )
 {
-	float B = calcB(rayVector, rayOrigin);
-	float C = calcC(rayVector, rayOrigin);
-	if (discriminant(B, C) < 0) return false;
+	float t0, t1;
+	Vector line = center - rayOrigin;
+	float tca = line.dotProduct(rayVector);
+	float d2 = line.dotProduct(line) - tca * tca;
+	if (d2 > radius*radius) return false;
+	float thc = sqrt(radius*radius - d2);
+	t0 = tca - thc;
+	t1 = tca + thc;
+	if (t0 > t1) std::swap(t0, t1);
+
+	if (t0 < 0) {
+		t0 = t1; // if t0 is negative, let's use t1 instead 
+		if (t0 < 0) return false; // both t0 and t1 are negative 
+	}
 	else return true;
 
 }
 
+
+
 Vector Sphere::intersectPoints(const Vector & rayVector, const Vector & rayOrigin)
 {
-	float B = calcB(rayVector, rayOrigin);
-	float C = calcC(rayVector, rayOrigin);
-	
-	float t0 = (-B - sqrt(discriminant(B, C))) / 2;
-	float t1 = (-B + sqrt(discriminant(B, C))) / 2;
-	float tAccept;
+	float t0, t1;
+	Vector line = center - rayOrigin;
+	float tca = line.dotProduct(rayVector);
+	float d2 = line.dotProduct(line) - tca * tca;
+	float thc = sqrt(radius*radius - d2);
+	t0 = tca - thc;
+	t1 = tca + thc;
+	if (t0 > t1) std::swap(t0, t1);
 
-	t0 < t1 ? tAccept = t0 : tAccept = t1;
-	Vector point = rayVector * tAccept;
-	point = point + rayOrigin;
+	if (t0 < 0) {
+		t0 = t1; // if t0 is negative, let's use t1 instead 
 
+	}
+
+	Vector point = rayOrigin + (rayVector * t0);
 	return point;
 }
 
@@ -39,22 +56,23 @@ Vector Sphere::normalPoint(Vector hitPoint)
 	return ((hitPoint - center)/radius).normalize();
 }
 
-float Sphere::calcB(const Vector & rayVector, const Vector & rayOrigin)
+double Sphere::calcB(const Vector & rayVector, const Vector & rayOrigin)
 {
 	Vector check = rayOrigin - center;
 	check = check * rayVector;
-	float B = (2 * (check.x + check.y + check.z));
+	double B = (2 * (check.x + check.y + check.z));
 	return B;
 }
 
-float Sphere::calcC(const Vector & rayVector, const Vector & rayOrigin)
+double Sphere::calcC(const Vector & rayVector, const Vector & rayOrigin)
 {
 	Vector temp = rayOrigin - center;
 	temp = temp*temp;
-	return (temp.x + temp.y + temp.z - powf(radius, 2));
+	double C = (temp.x + temp.y + temp.z - (radius * radius));
+	return C;
 }
 
-float Sphere::discriminant(float B, float C)
+double Sphere::discriminant(double A, double B, double C)
 {
-	return powf(B, 2) - (4 * C);
+	return (B*B) - (4 * A* C);
 }

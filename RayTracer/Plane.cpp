@@ -1,7 +1,7 @@
 #include "Plane.h"
 
-Plane::Plane(Vector p, Vector n, Vector co, float t, float d, float a, float s) :
-	Object(co, t, d, a, s)
+Plane::Plane(Vector p, Vector n, Vector co, bool r, float d, float a, float s) :
+	Object(co, r, d, a, s)
 {
 	point = p;
 	normal = n.normalize();

@@ -4,13 +4,14 @@
 #include "Matrix4.h"
 #include "Vector.h"
 #include <math.h>
+#include <algorithm>
 
 
 class Object {
 		
 	public:
 		Vector color;
-		float transparency;
+		bool reflective;
 		float diffuse;
 		float ambient;
 		float specular;
@@ -18,10 +19,10 @@ class Object {
 		Matrix4 transform;
 		Matrix4 inverse;
 		Matrix4 transpose;
-		Object(Vector co, float trans, float d, float a, float s);
+		Object(Vector co, bool ref, float d, float a, float s);
 
 		virtual bool isHit(Vector & rayVector, Vector& rayOrigin) = 0;
-		virtual Vector intersectPoints(const Vector & rayOrigin, const Vector &rayVec) = 0;
+		virtual Vector intersectPoints(const Vector &rayVec, const Vector &rayOrigin) = 0;
 		virtual Vector normalPoint(Vector hitPoint) = 0;
 
 };

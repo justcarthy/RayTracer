@@ -23,7 +23,9 @@ float Vector::magnitude()
 }
 
 float Vector::Distance(Vector& b) {
-	Vector temp = (*this) - b;
-	return (sqrtf(powf(temp.x, 2) + powf(temp.y, 2) + powf(temp.z, 2)));
+	float dx = x - b.x;
+	float dy = y - b.y;
+	float dz = z - b.z;
+	return sqrtf(dx * dx + dy * dy + dz * dz);
 }
 
