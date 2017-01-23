@@ -1,0 +1,86 @@
+<scene>
+	<resolution width="640" height="640"/>
+
+	<camera>
+		<specs fov="65"/>
+	</camera>
+
+
+	<lights>
+		<light>
+			<position x="0" y="9" z="-20.0"/>
+			<color r="1.0" g="1.0" b="1.0"/>
+		</light>
+	</lights>
+
+	<objects>
+
+		<planes>
+			<plane>
+				<point x="0.0" y="-10.0" z="0.0"/>
+				<normal x="0.0" y="10.0" z="0.0"/>
+				<color r="1.0" g="1.0" b="1.0" />
+				<specs ref="0" diff="1" ambi="1" spec="0"/>
+			</plane>
+			<plane>
+				<point x="0.0" y="10.0" z="0.0"/>
+				<normal x="0.0" y="-10.0" z="0.0"/>
+				<color r="1.0" g="1.0" b="1.0" />
+				<specs ref="0" diff="1" ambi="1" spec="0"/>
+			</plane>
+			<plane>
+				<point x="0.0" y="0.0" z="-30.0"/>
+				<normal x="0.0" y="0.0" z="10.0"/>
+				<color r="1.0" g="1.0" b="1.0" />
+				<specs ref="0" diff="1" ambi="1" spec="0"/>
+			</plane>
+			<plane>
+				<point x="10.0" y="0.0" z="0.0"/>
+				<normal x="-10.0" y="0.0" z="0.0"/>
+				<color r="0.0" g="0.0" b="1.0" />
+				<specs ref="0" diff="1" ambi="1" spec="0"/>
+			</plane>
+			<plane>
+				<point x="-10.0" y="0.0" z="0.0"/>
+				<normal x="10.0" y="0.0" z="0.0"/>
+				<color r="1.0" g="0.0" b="0.0" />
+				<specs ref="0" diff="1" ambi="1" spec="0"/>
+			</plane>
+		</planes>
+
+		<spheres>
+			<sphere radius="2.0">
+				<center x="-6.0" y="-8.0" z="-20.0"/>
+				<color r="0.0" g="0.0" b="0.0" />
+				<specs ref="1" diff="1" ambi="1" spec="1"/>
+			</sphere>
+		</spheres>
+
+
+		<triangles>
+			<triangle>
+				<point x="8" y="-10.0" z="-20.0"/>
+				<point x="9.5" y="-10.0" z="-22.0"/>
+				<point x="8.0" y="-6.0" z="-22.0"/>
+				<color r="0.94" g="0.75" b="0.31"/>
+				<specs ref="0" diff="1" ambi="1" spec="1"/>
+			</triangle>
+			<triangle>
+				<point x="8" y="-10.0" z="-20.0"/>
+				<point x="6.5" y="-10.0" z="-22.0"/>
+				<point x="8.0" y="-6.0" z="-22.0"/>
+				<color r="0.94" g="0.75" b="0.31"/>
+				<specs ref="0" diff="1" ambi="1" spec="1"/>
+			</triangle>
+			<triangle>
+				<point x="6.5" y="-10.0" z="-22.0"/>
+				<point x="9.5" y="-10.0" z="-22.0"/>
+				<point x="8.0" y="-6.0" z="-22.0"/>
+				<color r="0.94" g="0.75" b="0.31"/>
+				<specs ref="0" diff="1" ambi="1" spec="1"/>
+			</triangle>
+		</triangles>
+
+	</objects>
+
+</scene>

@@ -25,12 +25,12 @@ Vector backgroundColor(0, 0, 0);
 
 Vector traceRay(Vector &rayVec, Vector &eye, int rayDepth);
 Vector shade(Object* obj, Vector& point, Vector& normal, Vector &rayVec);
-Vector getShading(const Vector& rayVec, const Vector & normal, const Vector& lightVec, Light* light, Object * obj);
+Vector getShading( Vector& rayVec, Vector & normal,  Vector& lightVec, Light* light, Object * obj);
 bool inShadow(Vector& lightVec, Vector& offsetPoint, float lightDist);
 
 int main()
 {
-	Loader options("model", objectList, lightList);
+	Loader options("models/model.xml", objectList, lightList);
 	int width = options.width;
 	int height = options.height;
 	float fov = options.fov;
@@ -46,7 +46,7 @@ int main()
 	//objectList.push_back(new Sphere(Vector(-6, -8, -20), 2, Vector(0, 0, 0), true, 1, 1, 1));
 	//objectList.push_back(new Sphere(Vector(-2, -8, -20), 2, Vector(0.5, 0.2, 0.8), false, 1, 1, 1));
 	////objectList.push_back(new Sphere(Vector(-6, 6, -20), 2, Vector(0.2, 0.2, 0.7), true, 1, 0.1, 1));
-	////objectList.push_back(new Triangle(Vector(0, 0, -15), Vector(-5, 0, -15), Vector(0, 3, -20), Vector(0, 0.7, 1), 0, 1, 0.2, 1));
+	//objectList.push_back(new Triangle(Vector(0, 0, -15), Vector(-5, 0, -15), Vector(0, 3, -20), Vector(0, 0.7, 1), 0, 1, 0.2, 1));
 	//objectList.push_back(new Plane(Vector(0, -10, 0), Vector(0, 10, 0), Vector(1, 1, 1), 0, 1, 1, 0));
 	//objectList.push_back(new Plane(Vector(0, 0, -30), Vector(0, 0, 10), Vector(1, 1, 1), false, 1, 1, 0));
 	//objectList.push_back(new Plane(Vector(0, 10, 0), Vector(0, -10, 0), Vector(1, 1, 1), 0, 1, 1, 0));
@@ -146,7 +146,7 @@ Vector shade(Object* obj, Vector& point, Vector& normal, Vector &rayVec)
 
 }
 
-Vector getShading(const Vector& rayVec, const Vector & normal, const Vector& lightVec, Light* light, Object * obj ) {
+Vector getShading( Vector& rayVec, Vector & normal, Vector& lightVec, Light* light, Object * obj ) {
 
 	Vector color;
 	float diff = -INFINITY;

@@ -16,7 +16,8 @@ Loader::Loader(const char* filename, vector<Object*>& objectList, vector<Light*>
 	this->height = resolution.attribute("height").as_int();
 
 	pugi::xml_node camera = scene.child("camera");
-	this->fov = camera.attribute("fov").as_int();
+	pugi::xml_node specs = camera.child("specs");
+	this->fov = specs.attribute("fov").as_int();
 
 	pugi::xml_node lights = scene.child("lights");
 	//Load light list
@@ -48,19 +49,19 @@ Loader::Loader(const char* filename, vector<Object*>& objectList, vector<Light*>
 
 		
 		pugi::xml_node planePoint = it->child("point");
-		x = planePoint.attribute("x").as_double();
-		y = planePoint.attribute("y").as_double();
-		z = planePoint.attribute("z").as_double();
+		x = planePoint.attribute("x").as_float();
+		y = planePoint.attribute("y").as_float();
+		z = planePoint.attribute("z").as_float();
 
 		pugi::xml_node planeNormal = it->child("normal");
-		nx = planeNormal.attribute("x").as_double();
-		ny = planeNormal.attribute("y").as_double();
-		nz = planeNormal.attribute("z").as_double();
+		nx = planeNormal.attribute("x").as_float();
+		ny = planeNormal.attribute("y").as_float();
+		nz = planeNormal.attribute("z").as_float();
 
 		pugi::xml_node planeColor = it->child("color");
-		r = planeColor.attribute("r").as_double();
-		g = planeColor.attribute("g").as_double();
-		b = planeColor.attribute("b").as_double();
+		r = planeColor.attribute("r").as_float();
+		g = planeColor.attribute("g").as_float();
+		b = planeColor.attribute("b").as_float();
 
 		pugi::xml_node planeSpecs = it->child("specs");
 		ref = planeSpecs.attribute("ref").as_float();
@@ -73,17 +74,17 @@ Loader::Loader(const char* filename, vector<Object*>& objectList, vector<Light*>
 
 
 	for (pugi::xml_node_iterator it = spheres.begin(); it != spheres.end(); ++it) {
-		float radius = it->first_attribute().as_double();
+		float radius = it->first_attribute().as_float();
 
 		pugi::xml_node sphereCenter = it->child("center");
-		x = sphereCenter.attribute("x").as_double();
-		y = sphereCenter.attribute("y").as_double();
-		z = sphereCenter.attribute("z").as_double();
+		x = sphereCenter.attribute("x").as_float();
+		y = sphereCenter.attribute("y").as_float();
+		z = sphereCenter.attribute("z").as_float();
 
 		pugi::xml_node sphereColor = it->child("color");
-		r = sphereColor.attribute("r").as_double();
-		g = sphereColor.attribute("g").as_double();
-		b = sphereColor.attribute("b").as_double();
+		r = sphereColor.attribute("r").as_float();
+		g = sphereColor.attribute("g").as_float();
+		b = sphereColor.attribute("b").as_float();
 		
 		pugi::xml_node sphereSpecs = it->child("specs");
 		ref = sphereSpecs.attribute("ref").as_float();
@@ -97,27 +98,27 @@ Loader::Loader(const char* filename, vector<Object*>& objectList, vector<Light*>
 	for (pugi::xml_node_iterator it = triangles.begin(); it != triangles.end(); ++it) {
 
 		pugi::xml_node pointA = it->child("point");
-		x = pointA.attribute("x").as_double();
-		y = pointA.attribute("y").as_double();
-		z = pointA.attribute("z").as_double();
+		x = pointA.attribute("x").as_float();
+		y = pointA.attribute("y").as_float();
+		z = pointA.attribute("z").as_float();
 		Vector A(x, y, z);
 
 		pugi::xml_node pointB = pointA.next_sibling();
-		x = pointB.attribute("x").as_double();
-		y = pointB.attribute("y").as_double();
-		z = pointB.attribute("z").as_double();
+		x = pointB.attribute("x").as_float();
+		y = pointB.attribute("y").as_float();
+		z = pointB.attribute("z").as_float();
 		Vector B(x, y, z);
 
 		pugi::xml_node pointC = pointB.next_sibling();
-		x = pointC.attribute("x").as_double();
-		y = pointC.attribute("y").as_double();
-		z = pointC.attribute("z").as_double();
+		x = pointC.attribute("x").as_float();
+		y = pointC.attribute("y").as_float();
+		z = pointC.attribute("z").as_float();
 		Vector C(x, y, z);
 
 		pugi::xml_node colorTriangle = it->child("color");
-		r = colorTriangle.attribute("r").as_double();
-		g = colorTriangle.attribute("g").as_double();
-		b = colorTriangle.attribute("b").as_double();
+		r = colorTriangle.attribute("r").as_float();
+		g = colorTriangle.attribute("g").as_float();
+		b = colorTriangle.attribute("b").as_float();
 
 		pugi::xml_node triangleSpecs = it->child("specs");
 		ref = triangleSpecs.attribute("ref").as_float();

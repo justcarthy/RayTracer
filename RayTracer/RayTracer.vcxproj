@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="libs\pugixml.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Matrix4.cpp" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="libs\pugiconfig.hpp" />
     <ClInclude Include="libs\pugixml.hpp" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Loader.h" />
