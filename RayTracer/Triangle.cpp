@@ -8,6 +8,7 @@ Triangle::Triangle(Vector p1, Vector p2, Vector p3, Vector co, bool r, float d, 
 	t2 = p2;
 	t3 = p3;
 	normal = computeNormal(p1, p2, p3);
+	normal.normalize();
 }
 
 bool Triangle::isHit(Vector & rayVector, Vector & rayOrigin)

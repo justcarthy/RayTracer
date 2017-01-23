@@ -67,7 +67,7 @@
 
 
 		<triangles>
-			<!--
+
 			<triangle>
 				<point x="5" y="0" z="-25.0"/>
 				<point x="10" y="-10" z="-25.0"/>
@@ -75,23 +75,23 @@
 				<color r="0.94" g="0.75" b="0.31"/>
 				<specs ref="0" diff="0.8" ambi="1" spec="0.2"/>
 			</triangle>
-			<!--
+
 			<triangle>
-				<point x="8" y="-10.0" z="-20.0"/>
-				<point x="6.5" y="-10.0" z="-22.0"/>
-				<point x="8.0" y="-6.0" z="-22.0"/>
+				<point x="5" y="0" z="-25.0"/>
+				<point x="5" y="-10" z="-20.0"/>
+				<point x="0" y="-10.0" z="-25.0"/>
 				<color r="0.94" g="0.75" b="0.31"/>
 				<specs ref="0" diff="1" ambi="1" spec="1"/>
 			</triangle>
 
 			<triangle>
-				<point x="6.5" y="-10.0" z="-22.0"/>
-				<point x="9.5" y="-10.0" z="-22.0"/>
-				<point x="8.0" y="-6.0" z="-22.0"/>
+				<point x="5" y="0" z="-25.0"/>
+				<point x="0" y="-10.0" z="-25.0"/>
+				<point x="10" y="-10" z="-25.0"/>
 				<color r="0.94" g="0.75" b="0.31"/>
 				<specs ref="0" diff="1" ambi="1" spec="1"/>
 			</triangle>
-		-->
+
 		</triangles>
 
 	</objects>
