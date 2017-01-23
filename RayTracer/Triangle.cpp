@@ -1,4 +1,5 @@
 #include "Triangle.h"
+constexpr float kEpsilon = 1e-8;
 
 Triangle::Triangle(Vector p1, Vector p2, Vector p3, Vector co, bool r, float d, float a, float s)
 	: Object(co, r, d, a, s)
@@ -6,34 +7,34 @@ Triangle::Triangle(Vector p1, Vector p2, Vector p3, Vector co, bool r, float d, 
 	t1 = p1;
 	t2 = p2;
 	t3 = p3;
-	normal = crossProductForNormal(p1, p2, p3);
-	normal.normalize();
-	D = fabsf(normal.x *(-p1.x) + normal.y*(-p1.y) + normal.z*(p1.z));
+	normal = computeNormal(p1, p2, p3);
 }
 
 bool Triangle::isHit(Vector & rayVector, Vector & rayOrigin)
 {
-	float t;
 	float check = rayVector.dotProduct(normal);
-	if (check >= 0) return false;
-	else {
-		t = -1 * ((normal.dotProduct(rayOrigin) + D) / check);
-		if (t < 0) return false;
-	}
-	Vector hitP = (rayVector * t) + rayOrigin;
-	return (inTriangle(hitP));
+
+	if (fabs(check) <kEpsilon) return false;
+	
+	float dist = normal.dotProduct(t1);
+	float t = (normal.dotProduct(rayOrigin) + dist)/ check;
+
+	if (t < 0) return false;
+	Vector hitPoint = rayOrigin + (rayVector * t);
+	return (inTriangle(hitPoint));
 }
 
 Vector Triangle::intersectPoints(const Vector & rayVector, const Vector & rayOrigin)
 {
 
-	float t;
 	float check = rayVector.dotProduct(normal);
-	t = -1 * ((normal.dotProduct(rayOrigin) + D) / check);
-	Vector hitP = (rayVector * t) + rayOrigin;
 
+	float dist = normal.dotProduct(t1);
+	float t = (normal.dotProduct(rayOrigin) + dist) / check;
+	
+	Vector hitPoint = rayOrigin + (rayVector * t);
 
-	return hitP;
+	return hitPoint;
 }
 
 Vector Triangle::normalPoint(Vector hitPoint)
@@ -61,12 +62,10 @@ bool Triangle::inTriangle(Vector point)
 	return ((u >= 0) && (v >= 0) && (u + v < 1));
 }
 
-Vector Triangle::crossProductForNormal(Vector &p1, Vector &p2, Vector &p3) {
+Vector Triangle::computeNormal(Vector &p1, Vector &p2, Vector &p3) {
 	
 	Vector v = p1 - p2;
 	Vector w = p3 - p1;
-	float Nx = (v.y * w.z) - (v.z * w.y);
-	float Ny = (v.z * w.x) - (v.x * w.z);
-	float Nz = (v.x * w.y) - (v.y * w.x);
-	return Vector(Nx, Ny, Nz);
+	
+	return v.cross(w);
 }

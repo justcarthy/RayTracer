@@ -14,7 +14,7 @@ public:
 	bool isHit(Vector &rayVector, Vector &rayOrigin);
 	Vector intersectPoints(const Vector &rayVector, const Vector &rayOrigin);
 	Vector normalPoint(Vector hitPoint);
-	Vector crossProductForNormal(Vector &p1, Vector& p2, Vector& p3);
+	Vector computeNormal(Vector &p1, Vector& p2, Vector& p3);
 
 
 private:

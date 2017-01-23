@@ -7,6 +7,7 @@ public:
 	Vector(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
 	Vector() : x(0), y(0), z(0) {}
 	Vector& normalize();
+	Vector cross(const Vector& v1);
 	float dotProduct(const Vector& v)const;
 	float magnitude ();
 	float Distance(Vector & b);

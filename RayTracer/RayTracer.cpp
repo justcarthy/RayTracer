@@ -101,11 +101,11 @@ Vector traceRay(Vector &rayVec, Vector & eye, int rayDepth) {
 	}
 	if (traceClose < INFINITY) {
 		localColor = shade(hitObject, hitPoint, hitNormal, rayVec);
-		if (hitObject->reflective) {
+		if (hitObject->reflective > 0) {
 			Vector offsetPoint = hitPoint + hitNormal * 1e-3;
 			Vector reflectionVector = (rayVec)-hitNormal*(2 * ((hitNormal).dotProduct(rayVec)));
 			reflectColor = traceRay(reflectionVector, offsetPoint, ++rayDepth);
-			return localColor + reflectColor;
+			localColor =  localColor + (reflectColor * hitObject->reflective);
 		}
 		return localColor;
 	}
