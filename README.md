@@ -6,7 +6,7 @@ Given the defined co-ordinates and colours of 3D shapes such as a Triangle, Sphe
 
 ## Creating the scene
 
-A scene is defined through an xml file. The entire scene encompassed by the:
+A scene is defined through an xml file (currently hardcoded as models/model.xml). The entire scene encompassed by the:
 
 `<scene>...</scene>`
 
