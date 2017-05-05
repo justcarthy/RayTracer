@@ -21,8 +21,6 @@ std::vector<Light*> lightList;
 
 Vector backgroundColor(0, 0, 0);
 
-
-
 Vector traceRay(Vector &rayVec, Vector &eye, int rayDepth);
 Vector shade(Object* obj, Vector& point, Vector& normal, Vector &rayVec);
 Vector getShading( Vector& rayVec, Vector & normal,  Vector& lightVec, Light* light, Object * obj);
@@ -38,21 +36,6 @@ int main()
 
 	CImg<float> image(width, height, 1, 3, 1);
 	Camera eye(width, height, fov, angle, Vector(0, 0, 0));
-
-	//lightList.push_back(new Light(Vector(0, 9, -20), Vector(1, 1, 1)));
-	////lightList.push_back(new Light(Vector(5, 9, -20), Vector(0.2, 0.2, 0.2)));
-	////lightList.push_back(new Light(Vector(-5, 9, -25), Vector(0.2, 0.2, 0.2)));
-	////lightList.push_back(new Light(Vector(5, 9, -25), Vector(0.2, 0.2, 0.2)));
-	//objectList.push_back(new Sphere(Vector(-6, -8, -20), 2, Vector(0, 0, 0), true, 1, 1, 1));
-	//objectList.push_back(new Sphere(Vector(-2, -8, -20), 2, Vector(0.5, 0.2, 0.8), false, 1, 1, 1));
-	////objectList.push_back(new Sphere(Vector(-6, 6, -20), 2, Vector(0.2, 0.2, 0.7), true, 1, 0.1, 1));
-	//objectList.push_back(new Triangle(Vector(0, 0, -15), Vector(-5, 0, -15), Vector(0, 3, -20), Vector(0, 0.7, 1), 0, 1, 0.2, 1));
-	//objectList.push_back(new Plane(Vector(0, -10, 0), Vector(0, 10, 0), Vector(1, 1, 1), 0, 1, 1, 0));
-	//objectList.push_back(new Plane(Vector(0, 0, -30), Vector(0, 0, 10), Vector(1, 1, 1), false, 1, 1, 0));
-	//objectList.push_back(new Plane(Vector(0, 10, 0), Vector(0, -10, 0), Vector(1, 1, 1), 0, 1, 1, 0));
-	//objectList.push_back(new Plane(Vector(-10, 0, 0), Vector(10, 0, 0), Vector(1, 0, 0), false, 1, 1, 0));
-	//objectList.push_back(new Plane(Vector(10, 0, 0), Vector(-10, 0, 0), Vector(0, 0, 1), 0, 1, 1, 0));
-
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
